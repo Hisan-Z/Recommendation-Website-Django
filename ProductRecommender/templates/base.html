@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zxx">
+{% load static %}
+{% load poll_tag %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Ashion Template">
+  <meta name="keywords" content="Ashion, unica, creative, html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ShopMate</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+  <!-- Css Styles -->
+  <link rel="stylesheet" href="{% static  'recommender/css/bootstrap.min.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static  'recommender/css/font-awesome.min.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static  'recommender/css/elegant-icons.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static  'recommender/css/jquery-ui.min.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static  'recommender/css/magnific-popup.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static  'recommender/css/owl.carousel.min.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static  'recommender/css/slicknav.min.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static  'recommender/css/style.css'%}" type="text/css">
+</head>
+
+<body>
+  <!-- Page Preloder -->
+  <div id="preloder">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Offcanvas Menu Begin -->
+  <div class="offcanvas-menu-overlay"></div>
+  <div class="offcanvas-menu-wrapper">
+    <div class="offcanvas__close">+</div>
+    <ul class="offcanvas__widget">
+      <li><span class="icon_search search-switch"></span></li>
+      <li><a href="#"><span class="icon_heart_alt"></span>
+          <div class="tip">2</div>
+        </a></li>
+      <li><a href="#"><span class="icon_bag_alt"></span>
+          <div class="tip">2</div>
+        </a></li>
+    </ul>
+    <div class="offcanvas__logo">
+      <a href="./index.html"><img src="{% static 'recommender/img/logo.png' %}" alt=""></a>
+    </div>
+    <div id="mobile-menu-wrap"></div>
+    <div class="offcanvas__auth">
+      <a href="#">Login</a>
+      <a href="#">Register</a>
+    </div>
+  </div>
+  <!-- Offcanvas Menu End -->
+
+  <!-- Header Section Begin -->
+  <header class="header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xl-3 col-lg-2">
+          <div class="header__logo">
+            <a href="/"><img src="{% static 'logo/png/logo-no-background.png' %}" alt="" style="width:150px ;"></a>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-7">
+          <nav class="header__menu">
+            <ul>
+              <li class="{% if request.path == '/' %}active{% endif %}"><a href="/">Home</a></li>
+              <li><a href=" {% url 'explore' %} ">Explore</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="col-lg-3">
+          <div class="header__right">
+
+            {% if user.is_authenticated %}
+            <span class="dropdown mx-5">
+              <a class="text-capitalize fw-500 dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                {{ user }}
+              </a>
+
+              <ul class="dropdown-menu" id="dropdownMenu">
+                <li><a class="dropdown-item" href="{% url 'showbrought' %}">Purchase History</a></li>
+                <li><a class="dropdown-item" href="{% url 'changepass' %}">Change Password</a></li>
+                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+              </ul>
+            </span>
+            {% else %}
+            <div class="header__right__auth">
+              <a href="{% url 'login' %}">Login</a>
+              <a href="{% url 'signup' %}">Register</a>
+            </div>
+            {% endif %}
+
+
+            <ul class="header__right__widget">
+              <li><span class="icon_search search-switch"></span></li>
+              {% if user.is_authenticated %}
+              <li><a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"><span class="icon_heart_alt" style="top:6px"></span>
+                  <div class="tip">
+                    {{ liked_products|length }}
+                  </div>
+                </a></li>
+              <li><a href="{% url 'showbrought' %}"><span class="icon_bag_alt"></span>
+                  <div class="tip">
+                    {{ brought_products|length }}
+                  </div>
+                </a></li>
+              {% endif %}
+            </ul>
+
+          </div>
+        </div>
+      </div>
+      <div class="canvas__open">
+        <i class="fa fa-bars"></i>
+      </div>
+    </div>
+  </header>
+  <!-- Header Section End -->
+  {% block content %}
+  {% endblock content %}
+
+  <footer class="py-3 my-4">
+    <p class="text-center text-body-secondary">© 2023 Hisan Zehra</p>
+  </footer>
+
+
+  <!-- Search Begin -->
+  <div class="search-model">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+      <div class="search-close-switch">+</div>
+      <form class="search-model-form" action="{% url 'category' 'all' %}">
+        <input type="text" id="search-input" placeholder="Search here....." name="search_keyword" value="{{request.GET.search_keyword}}">
+      </form>
+    </div>
+  </div>
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasRightLabel">Liked Products</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+
+
+      {% for product in liked_products  %}
+
+
+      <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{ product.poster }}" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-md-8">
+            <a href="{% url 'remove-like' product.id %}"><span class="icon_close float-right"></span></a>
+            <div class="card-body">
+              <h5 class="card-title">
+                {{ product.title }}
+              </h5>
+              <p class="card-text">
+                <span class="text-decoration-line-through">
+                  {{ product.actual_price}} </span>
+                {{ product.selling_price }}
+              </p>
+              <a href=" {% url 'buy' product.id %} "><button class="btn btn-outline-dark btn-sm">Buy Now</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <!-- Search End -->
+
+
+
+  <!-- Js Plugins -->
+  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+  <!-- <script src="{% static 'js/jquery-ui.min.js' %}"></script> -->
+  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'recommender/js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'js/popper.min.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'recommender/js/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'recommender/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'recommender/js/jquery.magnific-popup.min.js' %}"></script>
+  <script src="{% static 'recommender/js/jquery-ui.min.js' %}"></script>
+  <script src="{% static 'recommender/js/mixitup.min.js' %}"></script>
+  <script src="{% static 'recommender/js/jquery.countdown.min.js' %}"></script>
+  <script src="{% static 'recommender/js/jquery.slicknav.js' %}"></script>
+  <script src="{% static 'recommender/js/jquery.nicescroll.min.js' %}"></script>
+  <script src="{% static 'recommender/js/main.js' %}"></script>
+  <script src="{% static 'recommender/js/owl.carousel.min.js' %}"></script>
+</body>
+
+</html>

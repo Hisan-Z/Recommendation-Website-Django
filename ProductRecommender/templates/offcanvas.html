@@ -1,0 +1,33 @@
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasRightLabel">Liked Products</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+
+
+    {% for product in data  %}
+
+
+    <div class="card mb-3" style="max-width: 540px;">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="{{ product.poster }}" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">
+              {{ product.title }}
+            </h5>
+            <p class="card-text">
+                <span class="text-decoration-line-through"> {{ product.actual_price}} </span>
+              {{ product.selling_price }}
+            </p>
+            <a href=" {% url 'buy' product.id %} "><button class="btn btn-outline-dark btn-sm">Buy Now</button></a>
+        </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

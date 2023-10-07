@@ -1,0 +1,44 @@
+  {% load static %}
+  <div class="content">
+    <div class="container">
+    </div>
+
+    
+    
+    <div class="site-section bg-left-half mb-5">
+      <h1 class='display-4'> {{ category }} </h1>
+      <div class="container owl-2-style">
+        
+        <div class="owl-carousel owl-2">
+          {% for product in carousel %}
+          <div class="media-29101">
+            <a href="{% url 'product_detail' product.id %}">
+              <div class="product__item__pic set-bg" data-setbg="{{ product.poster }}" 
+              {% if product.category == 'Bags, Wallets & Belts' or product.category == 'Footwear' %}
+              style="background-size:contain"
+              {% endif %}
+              >
+              <ul class="product__hover">
+                <li><a href="{{ product.poster }}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                <li><a href="{% url 'like' product.id %}"><span class="icon_heart_alt"></span></a></li>
+                <li><a href="{% url 'buy' product.id %}"><span class="icon_bag_alt"></span></a></li>
+              </ul>
+            </div>
+          </a>
+            <div class="product__item__text">
+                <h6><a href="{% url 'product_detail' product.id %}"> {{ product.title }} </a></h6>
+                
+            </div>
+        </div>
+          {% endfor %}
+          
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+    
+    
+
+  

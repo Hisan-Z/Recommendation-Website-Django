@@ -1,0 +1,310 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load poll_tag %}
+
+{% block content %}
+<!-- Categories Section Begin -->
+<section class="categories">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-6 p-0">
+        <div class="categories__item categories__large__item set-bg" data-setbg="{% static 'recommender/img/categories/category-1.jpg' %}">
+          <div class="categories__text">
+            <h1>Women’s Clothing </h1>
+            <p>Explore the latest trends in women's fashion with our exquisite collection of clothing. From elegant dresses to comfortable casual wear, we have something for every occasion.</p>
+            <a href=" {% url 'category' 'Clothing and Accessories' %} ">Shop now</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+            <div class="categories__item set-bg" data-setbg="{% static 'recommender/img/categories/category-2.jpg' %}">
+              <div class="categories__text">
+                <h4>Sunglasses</h4>
+                <a href=" {% url 'category' 'Sunglasses' %} ">Shop now</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+            <div class="categories__item set-bg" data-setbg="{% static 'recommender/img/categories/category-3.jpg' %}">
+              <div class="categories__text">
+                <h4>Women’s Bags</h4>
+                <a href=" {% url 'category' 'Bags, Wallets & Belts' %} ">Shop now</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+            <div class="categories__item set-bg" data-setbg="{% static 'recommender/img/categories/category-4.jpg' %}">
+              <div class="categories__text">
+                <h4>Jewellery</h4>
+                <a href="{% url 'category' 'Jewellery' %}">Shop now</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+            <div class="categories__item set-bg" data-setbg="{% static 'recommender/img/categories/category-5.jpg' %}">
+              <div class="categories__text">
+                <h4>Footwear</h4>
+                <a href="{% url 'category' 'Footwear' %}">Shop now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Categories Section End -->
+
+<!-- Product Section Begin -->
+<section class="product spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-4">
+        <div class="section-title">
+          <h4>Top Rated</h4>
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-8">
+        <ul class="filter__controls">
+          <li class="active" data-filter=".Clothing">Clothing</li>
+          <li data-filter=".Footwear">Footwear</li>
+          <li data-filter=".Jewellery">Jewellery</li>
+          <li data-filter=".Wallets">Bags</li>
+          <li data-filter=".Watches">Watches</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row property__gallery">
+      {% for category, products in context.items %}
+
+      {% for product in products %}
+
+
+      <div class="col-lg-3 col-md-4 col-sm-6 mix {{ product.category }}">
+        <div class="product__item">
+          <a href="{% url 'product_detail' product.id %}">
+
+            <div class="product__item__pic set-bg" data-setbg="{{ product.poster }}" {% if product.category == 'Bags, Wallets & Belts' or product.category == 'Footwear' %} style="background-size:contain" {% endif %}>
+            </a>
+              <ul class="product__hover">
+                <li><a href="{{ product.poster }}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                <li><a href="{% url 'like' product.id %}"><span class="icon_heart_alt"></span></a></li>
+                <li><a href="{% url 'buy' product.id %}"><span class="icon_bag_alt"></span></a></li>
+              </ul>
+            </div>
+        
+          <div class="product__item__text">
+            <h6><a href="{% url 'product_detail' product.id %}">
+                {{ product.title }} </a></h6>
+            <div class="rating">
+              {{ product.average_rating|rating_stars|safe }}
+            </div>
+            <div class="product__price">₹
+              {{ product.selling_price }}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Trend Section Begin -->
+<section class="trend spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="trend__content">
+          <div class="section-title">
+            <h4>Hot Trend</h4>
+          </div>
+
+
+          {% for product in context.trending|slice:"0:3"  %}
+          <div class="trend__item">
+            <div class="trend__item__pic">
+              <img src="{{ product.poster }}" alt="" width="90px" height="90px" style="object-fit: contain;">
+            </div>
+            <div class="trend__item__text">
+              <h6>
+                {{ product.title }}
+              </h6>
+              <div class="rating">
+                {{ product.average_rating|rating_stars|safe }}
+              </div>
+              <div class="product__price">
+                {{ product.selling_price }}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="trend__content">
+          <div class="section-title">
+            <h4>Best seller</h4>
+          </div>
+          {% for product in context.trending|slice:"3:6"  %}
+          <div class="trend__item">
+            <div class="trend__item__pic">
+              <img src="{{ product.poster }}" alt="" width="90px" height="90px" style="object-fit: contain;">
+            </div>
+            <div class="trend__item__text">
+              <h6>
+                {{ product.title }}
+              </h6>
+              <div class="rating">
+                {{ product.average_rating|rating_stars|safe }}
+              </div>
+              <div class="product__price">
+                {{ product.selling_price }}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="trend__content">
+          <div class="section-title">
+            <h4>Feature</h4>
+          </div>
+          {% for product in context.trending|slice:"6:"  %}
+          <div class="trend__item">
+            <div class="trend__item__pic">
+              <img src="{{ product.poster }}" alt="" width="90px" height="90px" style="object-fit: contain;">
+            </div>
+            <div class="trend__item__text">
+              <h6>
+                {{ product.title }}
+              </h6>
+              <div class="rating">
+                {{ product.average_rating|rating_stars|safe }}
+              </div>
+              <div class="product__price">
+                {{ product.selling_price }}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+<!-- Trend Section End -->
+
+<div class="container ">
+  {% if recommended %}
+
+  <div class="section-title">
+    <h4>Top picks for you</h4>
+  </div>
+
+  {% with recommended as rc  %}
+
+
+  {% include 'carousel.html' with carousel=rc %}
+  {% endwith %}
+  {% endif %}
+
+  {% if continue %}
+
+
+  <div class="d-flex">
+
+    <div>
+
+      <div class="section-title">
+        <h4>Keep shopping for</h4>
+      </div>
+      <div class="row row-cols-1 row-cols-md-2 g-4 w-100">
+        {% for product in continue|slice:"-4:"  %}
+        <div class="col-lg-3 col-md-4 col-sm-6">
+
+          <div class="product__item">
+            <div class="product__item__pic set-bg" data-setbg="{{ product.poster }}" {% if product.category == 'Bags, Wallets & Belts' or product.category == 'Footwear' %} style="background-size:contain" {% endif %}>
+              <ul class="product__hover">
+                <li><a href="{% static 'recommender/img/product/product-2.jpg' %}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                <li><a href="{% url 'like' product.id %}"><span class="icon_heart_alt"></span></a></li>
+                <li><a href="{% url 'buy' product.id %}"><span class="icon_bag_alt"></span></a></li>
+              </ul>
+            </div>
+            <div class="product__item__text">
+              <h6><a href="{% url 'product_detail' product.id %}">
+                  {{ product.title }} </a></h6>
+              <div class="rating">
+                {{ product.average_rating|rating_stars|safe }}
+              </div>
+              <div class="product__price">₹
+                {{ product.selling_price }}
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    <!-- <div class="w-50">
+        <h3>Upto 50% off</h3>
+        <div class="row row-cols-1 row-cols-md-2 g-4 w-100 mt" style="align-content: flex-start;height:100%">
+            
+            <div class="col">
+                <a href="{% url 'category' 'Clothing and Accessories' %}?discount=50">
+                    <div  style="height:40vh ;">
+                        <img src="{% static 'images/circle_1.jpg' %}"  class="img-circle" alt="...">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'category' 'Jewellery' %}?discount=50">
+              <div class="bg-danger rounded-circle" style="height:40vh ;">
+                <img src="{% static 'images/circle_2.jpg' %}" class="img-circle" alt="...">
+            </div>
+          </a>
+        </div>
+        <div class="col">
+              <a href="{% url 'category' 'Footwear' %}?discount=50">
+                  <div class="bg-danger rounded-circle" style="height:40vh;">
+                    <img src="{% static 'images/circle_3.jpg' %}" class="img-circle" alt="...">
+                </div>
+              </a>
+            </div>
+          <div class="col">
+              <a href="{% url 'category' 'Bags, Wallets & Belts' %}?discount=50">
+    
+                  <div class="bg-danger rounded-circle" style="height:40vh ;">
+                    <img src="{% static 'images/circle_4.jpg' %}" class="img-circle" alt="...">
+                  </div>
+              </a>
+          </div>
+    
+    
+        </div>
+    
+    
+      </div> -->
+  </div>
+
+  <!-- <h1>You might also like these</h1>
+  {% for category, products in context.items %}
+
+  {% with products as pr  %}
+  {% include 'carousel.html' with carousel=products %}
+  {% endwith %}
+
+  {% endfor %}
+   -->
+
+  {% endblock content %}

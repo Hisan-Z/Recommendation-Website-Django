@@ -1,0 +1,250 @@
+body {
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+p {
+  color: #b3b3b3;
+  font-weight: 300;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+a {
+  -webkit-transition: .3s all ease;
+  -o-transition: .3s all ease;
+  transition: .3s all ease;
+}
+
+a,
+a:hover {
+  text-decoration: none !important;
+}
+
+.content {
+  padding: 7rem 0;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+.bg-left-half {
+  position: relative;
+}
+
+.bg-left-half:before {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  z-index: -1;
+  content: "";
+  left: 0;
+  top: 0;
+  background-color: #f8f9fa;
+}
+
+.media-29101 img {
+  margin-bottom: 20px;
+  width: 100%;
+  /* Occupy the entire container width */
+  height: auto;
+  /* Maintain the aspect ratio */
+  object-fit: cover;
+}
+
+.media-29101 {
+  max-width: 350px;
+  max-height: 500px;
+  overflow: hidden;
+}
+
+
+.media-29101 h3 {
+  font-size: 18px;
+  font-weight: 900 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 350px;
+}
+
+.media-29101 h3 a {
+  color: #6c757d;
+}
+
+.owl-2-style .owl-nav {
+  display: none;
+}
+
+.owl-2-style .owl-dots {
+  text-align: center;
+  position: relative;
+  bottom: -30px;
+}
+
+.owl-2-style .owl-dots .owl-dot {
+  display: inline-block;
+}
+
+.owl-2-style .owl-dots .owl-dot span {
+  display: inline-block;
+  width: 15px;
+  height: 3px;
+  border-radius: 0px;
+  background: #cccccc;
+  -webkit-transition: 0.3s all cubic-bezier(0.32, 0.71, 0.53, 0.53);
+  -o-transition: 0.3s all cubic-bezier(0.32, 0.71, 0.53, 0.53);
+  transition: 0.3s all cubic-bezier(0.32, 0.71, 0.53, 0.53);
+  margin: 3px;
+}
+
+.owl-2-style .owl-dots .owl-dot.active span {
+  background: #007bff;
+}
+
+.owl-2-style .owl-dots .owl-dot:active,
+.owl-2-style .owl-dots .owl-dot:focus {
+  outline: none;
+}
+
+.space {
+  margin-left: 220px !important;
+}
+
+.ui-slider-handle .ui-corner-all {
+
+  border-radius: 50% !important;
+}
+
+.scrollable-content {
+  overflow-x: auto;
+  /* Enable horizontal scrolling if content overflows */
+  white-space: nowrap;
+  /* Prevent text from wrapping to new lines */
+}
+
+.modal {
+  height: 80% !important;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 1rem;
+}
+
+.Sidebars {
+  overflow-y: scroll !important;
+  scroll-margin: 0;
+  scrollbar-color: green;
+}
+
+.Sidebars::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollarea {
+  overflow-y: scroll;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+#content {
+  display: inline-block;
+  vertical-align: top;
+  height: 100%;
+  width: 82%;
+  overflow: auto;
+}
+
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(199, 199, 199);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #c6c6c6;
+}
+
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-button,
+html .ui-button.ui-state-disabled:hover,
+html .ui-button.ui-state-disabled:active {
+  border: 1px rgb(179, 179, 179) solid;
+  background: white !important;
+  border-radius: 50% !important;
+  z-index: 1;
+}
+
+.ui-widget-content {
+  background: rgb(216, 216, 216);
+  border: rgb(217, 215, 215);
+}
+
+.ui-widget-header {
+  background: rgb(69, 125, 248);
+}
+
+.ui-slider-horizontal {
+  height: 0.5rem;
+}
+
+.ui-slider-horizontal .ui-slider-handle {
+  top: -0.2rem;
+  height: 0.8rem;
+  width: 0.8rem;
+}
+
+.card-title{
+  white-space: nowrap!important;
+  overflow: hidden!important;
+  text-overflow: ellipsis!important;
+  /* max-width: 350px; */
+}
+
+.card-img-top{
+  max-height: 40vh!important;
+  width: min-content!important;
+  margin-inline: auto!important;
+}
+
+.card{
+  overflow: hidden!important;
+}
+
+.img-circle{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* margin: auto; */
+  border-radius: 50%;
+}

@@ -1,0 +1,18 @@
+<div class="col-lg-12 mb-5 text-center">
+    <div class="pagination__option">
+        {% if page.has_previous %}
+            <a class="" href="?page=1&{{ current_query_params }}">&laquo;&laquo;</a>
+            <a class="" href="?page={{ page.previous_page_number }}&{{ current_query_params }}">&laquo;</a>
+    {% endif %}
+
+    {% for page_num in page_range %}
+        <a class="" href="?page={{ page_num }}&{{ current_query_params }}">{{ page_num }}</a>
+    {% endfor %}
+
+    {% if page.has_next %}
+            <a class="" href="?page={{ page.next_page_number }}&{{ current_query_params }}">&raquo;</a>
+            <a class="" href="?page={{ page.paginator.num_pages }}&{{ current_query_params }}">&raquo;&raquo;</a>
+    {% endif %}
+</ul> 
+        </div>
+        </div>

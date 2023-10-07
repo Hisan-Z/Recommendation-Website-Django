@@ -1,0 +1,50 @@
+<!-- Latest compiled and minified CSS -->
+<!-- https://xstore.8theme.com/demos/hosting/-->
+{% load static %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" >
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,700&subset=latin-ext" rel="stylesheet">
+ 
+ 
+
+<!-- Item slider-->
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+      <div class="carousel carousel-showmanymoveone slide" id="itemslider">
+        <div class="carousel-inner">
+            {% for product in products %}
+            <div class="item active">
+                <div class="col-xs-12 col-sm-6 col-md-2">
+                    <a href="#"><img src={{ product.poster }}></a>
+                    <h4 class="text-center">{{ product.title }} </h4>
+                    <h5 class="text-center"> {{product.special_price}} </h5>
+                </div>
+            </div>
+            {% endfor %}
+
+          <!-- ................................................................. -->
+
+        </div>
+
+        <div id="slider-control">
+        <a class="left carousel-control" href="#itemslider" data-slide="prev"><img src="https://cdn0.iconfinder.com/data/icons/website-kit-2/512/icon_402-512.png" alt="Left" class="img-responsive"></a>
+        <a class="right carousel-control" href="#itemslider" data-slide="next"><img src="http://pixsector.com/cache/81183b13/avcc910c4ee5888b858fe.png" alt="Right" class="img-responsive"></a>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Item slider end-->
+<br/><br/>
+<footer class="bg-info">
+  <p class="text-center">
+  &copy; <a href="https://marufcse.com" target="_blank" >Maruf-Al Bashir 2023</a>
+  </p>
+</footer>

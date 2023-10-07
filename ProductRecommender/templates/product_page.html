@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+{% load poll_tag %}
+
+
+{% if context %}
+
+
+<!-- content -->
+<div class="breadcrumb-option">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb__links">
+          <a href="/"><i class="fa fa-home"></i>Home</a>
+          <a href="{% url 'category' context.product.category %}">
+            <span>
+              {{ context.product.category }}
+            </span>
+          </a>
+            <span>
+              {{ context.product.title }}
+            </span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<section class="shop spad">
+  <div class="container">
+    <div class="row gx-5">
+      <aside class="col-lg-6">
+        <div class="border rounded-4 mb-3 d-flex justify-content-center main-image">
+          <img style="max-width: 100%; max-height: 100vh; margin: auto;" class="rounded-4 fit" src="{{ context.product.poster }}" />
+          {% comment %} <a data-fslightbox="mygalley" class="rounded-4" target="_blank" data-type="image" href="{{ context.product.poster}}">
+          </a> {% endcomment %}
+        </div>
+
+        <div class="d-flex justify-content-center flex-wrap mb-3">
+          {% image_list_from_string context.product.img_path as image_path_list %}
+          {% for img in image_path_list %}
+          {% comment %} <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="{{ img |replace:"128,600" }}" class="item-thumb">
+            <img width="60" height="60" class="rounded-2 " src="{{ img }}" />
+          </a> {% endcomment %}
+          <img class="rounded-2 m-2" src="{{ img|replace:'128,100' }}" onclick="changeMainImage(this)" /> &nbsp
+          {% endfor %}
+
+        </div>
+      </aside>
+      <main class="col-lg-6" style="overflow-y: scroll;
+        overflow-x: hidden;">
+        <div class="ps-lg-3">
+          <h4 class="title text-dark">
+            {{ context.product.title }}
+          </h4>
+          <h3>
+            {{ context.product.brand }}
+          </h3>
+          <div class="d-flex flex-row my-3">
+            <div class="text-warning mb-1 me-2">
+              {{ context.product.average_rating|rating_stars|safe }}
+              {{ context.product.average_rating }}
+            </div>
+          </div>
+          <div class="mb-3">
+            {% if context.product.selling_price %}
+            <span class="h5" style='text-decoration: line-through;'>₹ {{context.product.actual_price}} </span> &nbsp
+            <span class="h5">₹ {{context.product.selling_price}} </span>
+            {% else %}
+            <span class="h5">₹ {{context.product.actual_price}} </span>
+            <h3>
+              {{ context.product.discount }}
+            </h3>
+            {% endif %}
+          </div>
+          <p>
+            {{context.product.description}}
+          </p>
+          <hr />
+          <a href=" {{context.product.url}} " class="btn btn-outline-dark shadow-0"> Buy now </a>
+          <a href=" {% url 'like' context.product.id %} " class="btn btn-light border border-secondary  icon-hover "> <i class="me-1 fa fa-heart fa-lg"></i> Save </a>
+        </div>
+      </main>
+    </div>
+  </div>
+</section>
+<center class="container display-6">
+  You might also like these
+</center>
+{% include 'carousel.html' with carousel=context.similar_products %}
+
+{% endif %}
+
+{% if error %}
+<center class="mt-5 w-50 mx-auto d-block">
+  <h1>{{error}}</h1>
+  <a href=" {% url 'login' %} ">
+    <button class="btn btn-outline-primary">Login</button>
+  </a>
+</center>
+{% endif %}
+
+
+<script>
+  function changeMainImage(thumbnail) {
+    const mainImage = document.querySelector('.main-image img');
+    mainImage.src = thumbnail.src.replaceAll('100', '832');
+  }
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock content %}
+</body>
+
+</html>

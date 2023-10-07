@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+{% load static %}
+{% load poll_tag %}
+<!-- Header Section End -->
+
+
+<div class="breadcrumb-option">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb__links">
+          <a href="/"><i class="fa fa-home"></i>Home</a>
+            <span>
+              {{ category }}
+            </span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Shop Section Begin -->
+<section class="shop spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-3">
+        <div class="shop__sidebar">
+          <div class="sidebar__filter">
+            <div class="section-title">
+              <h4>Shop by price</h4>
+              {{ request.GET.min_price }}
+            </div>
+            <div class="filter-range-wrap">
+              <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="{% if request.GET.min_price %}{{ request.GET.min_price }}{% else %}0{% endif %}" data-max="{% if request.GET.max_price %}{{request.GET.max_price}}{% else %}5000{% endif %}"></div>
+              <div class="range-slider">
+                <div class="price-input">
+                  <p>Price:</p>
+                  <form action="#" id="myform" onchange="this.form.submit()">
+                    <input type="text" name="min_price" id="minPriceInput" value="{% if request.GET.min_price %}₹{{ request.GET.min_price }}{% else %}₹0{% endif %}">
+                    <input type="text" name="max_price" id="maxPriceInput" value="{% if request.GET.max_price %}₹{{request.GET.max_price}}{% else %}₹5000+{% endif %}">
+                  </form>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="sidebar__categories">
+
+            <div class="categories__accordion">
+              <div class="accordion" id="accordionExample">
+
+                <div class="card">
+                  <div class="section-title">
+                    <a data-toggle="collapse" data-target="#brand">
+                      <h4>Shop by Brand</h4>
+                    </a>
+                  </div>
+                  <div id="brand" class="collapse show" data-parent="#accordionExample">
+                    <form class="input-group mb-3" action="" style="max-width:100% ;">
+                      <button class="input-group-text btn-sm" style="padding:0.25rem 0.5rem" id="basic-addon1" type='submit'><i class="fa fa-search"></i></button>
+                      <input style="width:80% ;" type="text" class="form-control-sm" placeholder="Search a brand" value="{{request.GET.brand}}" name='brand' oninput="this.form.submit()" autofocus style="min-height: calc(1.5em + 1rem );">
+                    </form>
+                    <!-- <form action="" method="get" id="filterform"> -->
+                    {% for brand in selected_brands %}
+                    <div class="col-md-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="{{ brand }}" name="selected_brands" value="{{ brand }}" checked form="myform">
+                        <label class="form-check-label" for="brand{{ brand }}">
+                          {{ brand }}
+                        </label>
+                      </div>
+                    </div>
+
+                    {% endfor %}
+
+                    {% if selected_brands|length < 7 %}
+                    {% with selected_brands_count=selected_brands|length %}
+                    {% with slicing_no=7|subtract:selected_brands_count %}
+                    {% for brand in brands|slice:slicing_no %}
+                    {% if brand not in selected_brands %}
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="{{ brand }}" name="selected_brands" value="{{ brand }}" oninput="this.form.submit()" form="myform">
+                      <label class="form-check-label" for="{{ brand }}">
+                        {{ brand }}
+                      </label>
+                    </div>
+                    <!-- </form> -->
+
+                    {% endif %}
+                    {% endfor %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% elif selected_brands|length == 0 %}
+
+                    {% for brand in brands|slice:7 %}
+
+                    {% if brand not in selected_brands %}
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="{{ brand }}" name="selected_brands" value="{{ brand }}" onchange="this.form.submit()" {% if brand in selected_brands %} checked {% endif %}>
+                      <label class="form-check-label" for="{{ brand }}">
+                        {{ brand }}
+                      </label>
+                    </div>
+                    <!-- </form> -->
+
+                    {% endif %}
+                    {% endfor %}
+
+                    {% endif %}
+
+
+                    {% if brands|length > 7 %}
+                    <!-- Scrollable modal -->
+                    <div class="modal fade" id="Modal" style="display: none;z-index: 9999;height: 70%;top:10%" data-bs-backdrop="false">
+                      <div class="modal-dialog modal-dialog-scrollable" style="margin-left: 10%;">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <form class="input-group-sm mb-3" action="" onsubmit="event.preventDefault()">
+                              <button class="input-group-text" id="basic-addon1" type='submit'><i class="fas fa-search"></i></button>
+                              <input type="text" class="form-control-sm" placeholder="Search a brand" value="{{request.GET.brand}}" name='brand' oninput="this.form.submit()" autofocus style="min-height: calc(1.5em + 1rem );">
+                            </form>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body" style="overflow-x: auto;">
+                            <form action="" id="ModalForm">
+                              <div class="row">
+
+                                {% for brand in selected_brands %}
+                                <div class="col-md-3">
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="{{ brand }}" name="selected_brands" value="{{ brand }}" checked>
+                                    <label class="form-check-label" for="brand{{ brand }}">
+                                      {{ brand }}
+                                    </label>
+                                  </div>
+                                </div>
+                                {% if forloop.counter|divisibleby:4 %}
+                              </div>
+                              <div class="row">
+                                {% endif %}
+                                {% endfor %}
+
+                                {% for brand in brands %}
+
+                                {% if brand not in selected_brands %}
+                                <div class="col-md-3">
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="{{ brand }}" name="selected_brands" value="{{ brand }}">
+                                    <label class="form-check-label" for="brand{{ brand }}">
+                                      {{ brand }}
+                                    </label>
+                                  </div>
+                                </div>
+                                {% endif %}
+                                {% if forloop.counter|divisibleby:4 %}
+                              </div>
+                              <div class="row">
+                                {% endif %}
+                                {% endfor %}
+                              </div>
+                            </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="submit" class="btn btn-outline-dark" form="ModalForm">Apply filter</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Modal">
+                      More
+                    </button>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="section-title">
+                    <a data-toggle="collapse" data-target="#discount">
+                      <h4>Shop by Discount</h4>
+                    </a>
+                  </div>
+                  <div id="discount" class="collapse" data-parent="#accordionExample">
+                    <div class="card-body">
+                      <ul>
+                        <li><input type="checkbox" name="discount" value="80" oninput="this.form.submit()" {% if '80' in selected_discounts %}checked{% endif %} form="myform"> <label for="80"> 80% or More</label></li>
+                        <li><input type="checkbox" name="discount" value="70" oninput="this.form.submit()" {% if '70' in selected_discounts %}checked{% endif %} form="myform"> <label for="70"> 70% or More</label></li>
+                        <li><input type="checkbox" name="discount" value="60" oninput="this.form.submit()" {% if '60' in selected_discounts %}checked{% endif %} form="myform"> <label for="60"> 60% or More</label></li>
+                        <li><input type="checkbox" name="discount" value="50" oninput="this.form.submit()" {% if '50' in selected_discounts %}checked{% endif %} form="myform"> <label for="50"> 50% or More</label></li>
+                        <li><input type="checkbox" name="discount" value="40" oninput="this.form.submit()" {% if '40' in selected_discounts %}checked{% endif %} form="myform"> <label for="40"> 40% or More</label></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="section-title">
+                    <a data-toggle="collapse" data-target="#rating-collapse">
+                      <h4>Shop by rating</h4>
+                    </a>
+                  </div>
+
+                  <div id="rating-collapse" class="collapse">
+                    <div class="card-body">
+                      <ul>
+                        <li><input type="checkbox" name="rating" value="4" id="4" oninput="this.form.submit()" {% if '4' in selected_ratings %}checked{% endif %} form="myform"><label for="4">4 or above</label></li>
+                        <li><input type="checkbox" name="rating" value="3" id="3" oninput="this.form.submit()" {% if '3' in selected_ratings %}checked{% endif %} form="myform"><label for="3">3 or above</label></li>
+                        <li><input type="checkbox" name="rating" value="2" id="2" oninput="this.form.submit()" {% if '2' in selected_ratings %}checked{% endif %} form="myform"><label for="2">2 or above</label></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-9">
+        <div class="row">
+
+          {% for product in page %}
+
+
+          <div class="col-lg-4 col-md-6">
+            <div class="product__item">
+              <div class="product__item__pic set-bg" data-setbg="{{ product.poster }}" {% if product.category == 'Bags, Wallets & Belts' or product.category == 'Footwear' or product.category == "Sunglasses" %} style="background-size:contain" {% endif %}>
+                <ul class="product__hover">
+                  <li><a href="{{ product.poster }}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                  <li><a href="{% url 'like'  product.id %}"><span class="icon_heart_alt"></span></a></li>
+                  <li><a href="{% url 'buy' product.id %}"><span class="icon_bag_alt"></span></a></li>
+                </ul>
+              </div>
+              <div class="product__item__text">
+                <h6><a href="{% url 'product_detail' product.id %}">
+                    {{ product.title }} </a></h6>
+                <div class="rating">
+                  {{ product.average_rating|rating_stars|safe }}
+                </div>
+                <div class="product__price">₹
+                  {{ product.selling_price }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Shop Section End -->
+{% pagination page page_range current_query_params %}
+{% endblock content %}
