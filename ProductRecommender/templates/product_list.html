@@ -6,6 +6,9 @@
 {% load poll_tag %}
 <!-- Header Section End -->
 
+{{ context }}
+
+{{ error_message }}
 
 <div class="breadcrumb-option">
   <div class="container">
@@ -33,7 +36,7 @@
           <div class="sidebar__filter">
             <div class="section-title">
               <h4>Shop by price</h4>
-              {{ request.GET.min_price }}
+              {{ request.GET.selected_brands    }}
             </div>
             <div class="filter-range-wrap">
               <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="{% if request.GET.min_price %}{{ request.GET.min_price }}{% else %}0{% endif %}" data-max="{% if request.GET.max_price %}{{request.GET.max_price}}{% else %}5000{% endif %}"></div>
@@ -41,8 +44,8 @@
                 <div class="price-input">
                   <p>Price:</p>
                   <form action="#" id="myform" onchange="this.form.submit()">
-                    <input type="text" name="min_price" id="minPriceInput" value="{% if request.GET.min_price %}₹{{ request.GET.min_price }}{% else %}₹0{% endif %}">
-                    <input type="text" name="max_price" id="maxPriceInput" value="{% if request.GET.max_price %}₹{{request.GET.max_price}}{% else %}₹5000+{% endif %}">
+                    <input type="text" name="min_price" id="minPriceInput" value="{% if request.GET.min_price %}{{ request.GET.min_price }}{% else %}0{% endif %}">
+                    <input type="text" name="max_price" id="maxPriceInput" value="{% if request.GET.max_price %}{{request.GET.max_price}}{% else %}5000{% endif %}">
                   </form>
                 </div>
               </div>
@@ -61,10 +64,10 @@
                     </a>
                   </div>
                   <div id="brand" class="collapse show" data-parent="#accordionExample">
-                    <form class="input-group mb-3" action="" style="max-width:100% ;">
-                      <button class="input-group-text btn-sm" style="padding:0.25rem 0.5rem" id="basic-addon1" type='submit'><i class="fa fa-search"></i></button>
-                      <input style="width:80% ;" type="text" class="form-control-sm" placeholder="Search a brand" value="{{request.GET.brand}}" name='brand' oninput="this.form.submit()" autofocus style="min-height: calc(1.5em + 1rem );">
-                    </form>
+                    <!-- <form class="input-group mb-3" action="" style="max-width:100% ;"> -->
+                      <button class="input-group-text btn-sm" style="padding:0.25rem 0.5rem" id="basic-addon1" type='submit' form="myform"><i class="fa fa-search"></i></button>
+                      <input style="width:80% ;" type="text" class="form-control-sm" placeholder="Search a brand" value="{{request.GET.brand}}" name='brand' oninput="this.form.submit()" autofocus style="min-height: calc(1.5em + 1rem );" form="myform">
+                    <!-- </form> -->
                     <!-- <form action="" method="get" id="filterform"> -->
                     {% for brand in selected_brands %}
                     <div class="col-md-3">
@@ -224,7 +227,7 @@
 
           {% for product in page %}
 
-
+            <!-- {{ product }} -->
           <div class="col-lg-4 col-md-6">
             <div class="product__item">
               <div class="product__item__pic set-bg" data-setbg="{{ product.poster }}" {% if product.category == 'Bags, Wallets & Belts' or product.category == 'Footwear' or product.category == "Sunglasses" %} style="background-size:contain" {% endif %}>

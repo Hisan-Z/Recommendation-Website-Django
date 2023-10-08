@@ -93,20 +93,25 @@ def product_category(request, product_category):
         selected_discounts = request.GET.getlist("discount")
         selected_ratings = request.GET.getlist("rating")
 
+        print(brand_filter)
         # Get all products for the given category
         products = Product.objects.filter(category=product_category)
-
-        if product_category == "all":
+        
+        if product_category == "all": 
             search_query = request.GET.get("search_keyword")
-            products = Product.objects.filter(
-                Q(title__icontains=search_query) | Q(category__icontains=search_query)
+            products = Product.objects.filter( 
+                Q(title__icontains=search_query)
+                | Q(category__icontains=search_query)
             )
-
+            print(len(products))
+        print(len(products))
         # Apply brand filtering if a brand filter is provided
         get_brand = request.GET.getlist("selected_brands")
+        print(get_brand)
         if get_brand:
             products = products.filter(brand__in=get_brand)
-
+        print(products)
+        print(len(products))
         # Apply price range filtering
         if min_price:
             products = products.filter(selling_price__gte=min_price)
@@ -162,19 +167,16 @@ def product_category(request, product_category):
                 current_page + half_visible_page_count + 1,
             )
         current_query_params = request.GET.copy()
-        if "page" in current_query_params:
-            del current_query_params["page"]
-
+        if 'page' in current_query_params:
+            del current_query_params['page']
+            
         print(current_query_params)
         # Pass the filtered products, brands, page, and page_range to the template
         context = {
             "page": page,
-            "brands": Product.objects.filter(brand__icontains=brand_filter)
-            .values_list("brand", flat=True)
+            "brands":Product.objects.filter(category=product_category, brand__icontains=brand_filter).values_list("brand", flat=True)
             .distinct()
-            .order_by("brand")
-            if brand_filter
-            else Product.objects.values_list("brand", flat=True)
+            .order_by("brand") if brand_filter else Product.objects.filter(category=product_category).values_list("brand", flat=True)
             .distinct()
             .order_by("brand"),
             "page_range": page_range,
@@ -184,7 +186,7 @@ def product_category(request, product_category):
             "selected_min": min_price,
             "selected_max": max_price,
             "current_query_params": current_query_params.urlencode(),
-            "category": product_category,
+            "category":product_category
         }
 
         return render(request, "product_list.html", context)
