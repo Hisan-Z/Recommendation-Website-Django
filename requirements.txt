@@ -1,0 +1,5 @@
+Django==4.2.4
+django_postgres_extensions==0.9.3
+numpy==1.24.1
+pandas==2.0.0
+scikit_learn==1.3.0
