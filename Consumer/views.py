@@ -1,3 +1,4 @@
+from allauth.account.views import LoginView
 from django.contrib.auth import (authenticate, login, logout,
                                  update_session_auth_hash)
 from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
@@ -42,7 +43,7 @@ def signupuser(request):
             except IntegrityError:
                 return render(
                     request,
-                    "signup.html",
+                    "allauth/account/signup.html",
                     {"form": UserCreationForm(), "error": "Username already exists"},
                 )
     else:
@@ -68,7 +69,7 @@ def loginuser(request):
             login(request, user)
             return redirect("/")
     else:
-        return render(request, "login.html", {"form": AuthenticationForm()})
+        return render(request, "allauth/account/login.html", {"form": AuthenticationForm()})
 
 
 def logoutuser(request):
@@ -97,3 +98,11 @@ def changepassword(request):
     
 def error404(request,exception):
     return render(request,"error404.html",{"exception",exception},status=404)
+
+
+def redirecthome(request):
+    print("hi")
+    return redirect('home')
+
+class CustomLoginView(LoginView):
+    template_name = 'signup.html'

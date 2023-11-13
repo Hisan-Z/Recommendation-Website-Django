@@ -1,0 +1,11 @@
+{
+    "builds":[{
+        "src":"Final_project/wsgi.py",
+        "use":"@vercel/python",
+        "config":{"maxLambdaSize":"15mb","runtime":"pyhton3.9"}
+    }],
+    "routes":[{
+        "src":"/(.*)",
+        "dest":"Final_project/wsgi.py"
+    }]
+}

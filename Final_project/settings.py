@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-^k&_d0e*pvo-#7t15%6((=4r-vseoi6o1!f8gd1-7byh=r7gjo
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".vercel.app"]
 
 DEBUG=True
 
@@ -39,6 +39,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     "ProductRecommender.apps.ProductrecommenderConfig",
     "Consumer"
 ]
@@ -51,6 +56,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # all auth for signup
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = "Final_project.urls"
@@ -105,6 +112,27 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    # Default backend for Django authentication.
+    'django.contrib.auth.backends.ModelBackend',
+
+    # Allauth specific authentication methods, such as login by e-mail.
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# Setup allauth parameters
+SITE_ID = 2  
+# LOGIN_REDIRECT_URL :- destination of login page in your urls.py
+LOGIN_REDIRECT_URL = '/'
+# ACCOUNT_LOGOUT_REDIRECT :- where to redirect when user logout
+ACCOUNT_LOGOUT_REDIRECT = '/'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
