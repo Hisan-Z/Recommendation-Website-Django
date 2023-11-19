@@ -1,11 +1,22 @@
 {
+    "version":2,
     "builds":[{
         "src":"Final_project/wsgi.py",
         "use":"@vercel/python",
         "config":{"maxLambdaSize":"15mb","runtime":"pyhton3.9"}
-    }],
+    },
+    {
+        "src":"build.sh",
+        "use":"@vercel/static-build",
+        "config":{
+            "distDir":"staticfiles_build"
+        }
+    }
+],
     "routes":[{
         "src":"/(.*)",
         "dest":"Final_project/wsgi.py"
+    },{
+        "src":"/static/(.*) ","dest":"/static/$1"
     }]
 }
