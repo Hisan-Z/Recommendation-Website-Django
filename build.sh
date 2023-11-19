@@ -2,7 +2,7 @@
 # exit on error
 set -o errexit
 echo "BUILD START"
-python3.9 -m pip install -r requirements.txt
+pip install -r requirements.txt
 
 python3.9 manage.py collectstatic --no-input
 python3.9 manage.py migrate
