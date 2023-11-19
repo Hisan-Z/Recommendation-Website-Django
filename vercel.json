@@ -3,7 +3,7 @@
     "builds":[{
         "src":"Final_project/wsgi.py",
         "use":"@vercel/python",
-        "config":{"maxLambdaSize":"15mb","runtime":"pyhton3.9"}
+        "config":{"maxLambdaSize":"15mb","runtime":"pyhton3.9.*"}
     },
     {
         "src":"build.sh",
