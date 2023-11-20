@@ -3,9 +3,11 @@
 set -o errexit
 echo "BUILD START"
 pip install -r requirements.txt
+echo "req done"
 
-# python manage.py collectstatic --no-input
+python manage.py collectstatic --no-input
 python manage.py migrate
+echo "moigrated"
 python manage.py load_products --path merge_product4.csv
 
 echo "BUILD END"
